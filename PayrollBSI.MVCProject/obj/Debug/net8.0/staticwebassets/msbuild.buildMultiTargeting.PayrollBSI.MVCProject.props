@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\PayrollBSI.MVCProject.props" />
+</Project>

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<PayrollBSI.MVCProject.Models.EmployeeModel>
+
+@{
+    ViewData["Title"] = "Employee List";
+
+}
+
+
+<div class="container mt-5">
+    <h2>Employee List</h2>
+    <div class="card">
+        <div class="card-body">
+            <table class="employee-table">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Position Name</th>
+                        <th>Role Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var employee in Model)
+                    {
+                        <tr>
+                            <td>@(employee.FirstName + " " + employee.LastName)</td>
+                            <td>@employee.Position.PositionName</td>
+                            <td>@employee.Role.RoleName</td>
+                            <td class="employee-actions">
+                                <a href="@Url.Action("Index", "Attendance", new { employeeId = employee.EmployeeId })" class="btn btn-primary">Attendance</a>
+                                <a href="@Url.Action("Index", "PayrollDetails", new { employeeId = employee.EmployeeId })" class="btn btn-info">Payroll Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* CSS Styling */
+    .employee-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .employee-table th {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .employee-table td {
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+    .employee-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+        .employee-actions a {
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .employee-actions .btn-primary {
+            background-color: #007bff;
+        }
+
+            .employee-actions .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+        .employee-actions .btn-info {
+            background-color: #17a2b8;
+        }
+
+            .employee-actions .btn-info:hover {
+                background-color: #138496;
+            }
+
+    .card {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+    }
+</style>

@@ -1,0 +1,72 @@
+﻿@model PayrollBSI.MVCProject.ViewModels.InsertWithSPViewModels
+
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-4">
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="card-title">Create Payroll</h5>
+				</div>
+				<div class="card-body">
+					<form asp-action="Insert" method="post">
+						<div class="form-group">
+							<label for="employeeId">Employee ID</label>
+							<select id="employeeId" name="employeeId" class="form-control">
+								<option value="">Select Employee</option>
+								@foreach (var employee in ViewBag.employeeList)
+								{
+									<option value="@employee.EmployeeId">@($"{employee.Employee.FirstName} {employee.Employee.LastName}")</option>
+								}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="attendanceId">Attendance ID</label>
+							<select id="attendanceId" name="attendanceId" class="form-control">
+								<option value="">Select Attendance</option>
+								@foreach (var attendances in ViewBag.attendanceList)
+								{
+									<option value="@attendances.AttendanceId">@($"{attendances.AttendanceId}")</option>
+								}
+							</select>
+						</div>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts
+{
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('#employeeId').change(function () {
+				var employeeId = $(this).val();
+				if (employeeId) {
+					$.ajax({
+						url: '@Url.Action("GetAttendancesByEmployeeId", "YourControllerName")',
+						type: 'GET',
+						data: { employeeId: employeeId },
+						success: function (data) {
+							$('#attendanceId').empty().prop('disabled', false);
+							if (data.length > 0) {
+								$.each(data, function (index, attendance) {
+									$('#attendanceId').append($('<option></option>').attr('value', attendance.Id).text(attendance.Total));
+								});
+							} else {
+								$('#attendanceId').append($('<option></option>').text('No Attendance Available'));
+							}
+						}
+					});
+				} else {
+					$('#attendanceId').empty().prop('disabled', true).append($('<option></option>').text('Select Attendance'));
+				}
+			});
+		});
+	</script>
+}

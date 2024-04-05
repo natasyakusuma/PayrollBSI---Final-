@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PayrollBSI.MVCProject.Models.AttendanceModel>
+
+@{
+    ViewData["Title"] = "Attendance List";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<!-- Menambahkan link ke Bootstrap CSS -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">Attendance List</h5>
+                        </div>
+                        <div class="col text-right">
+                            <a href="@Url.Action("Create", "Attendance")" class="btn btn-primary">Create</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Overtime Hours</th>
+                                <th>Regular Hours</th>
+                                <th>Attendance Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var attendance in Model)
+                            {
+                                <tr>
+                                    <td>@attendance.Employee.FirstName @attendance.Employee.LastName</td>
+                                    <td>@attendance.OvertimeHours</td>
+                                    <td>@attendance.RegularHours</td>
+                                    <td>@attendance.AttendanceTotal</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
